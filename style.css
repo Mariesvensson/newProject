@@ -1,0 +1,141 @@
+* {
+
+    height: auto;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    
+}
+
+body {
+
+    margin-left: 250px;
+    margin-right: 250px;
+    background: linear-gradient(to bottom, rgba(248, 246, 245, 0.63), rgb(250, 225, 221));
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+#content-container {
+
+    width: 100%;
+    height: 100%;
+    display: grid;
+   
+    grid-template:
+
+        "a a a "
+        "b b b"
+        "c c c "
+        "d d d" ;
+
+        align-content: center;
+        justify-content: center;
+
+}
+
+img{
+
+    height: 300px;
+    width: 300px;
+}
+h1{
+
+    font-size: 80px;
+    color: rgba(138, 129, 124, 0.801);
+    
+    
+}
+
+#search-text{
+
+    font-size: 30px;
+   
+}
+
+header {
+
+    align-content: center;
+    justify-content: center;
+    display: grid;
+    height: 200px;
+    grid-area: a;
+    width: 800px;
+   
+  
+    background: linear-gradient(to bottom, rgb(247, 246, 245), rgba(252, 213, 206, 0.575));
+
+}
+
+.menu{
+
+ border: none;
+ padding: 15px;
+ border-radius: 40px;
+ width: 200px;
+ border: solid 4px  rgba(254, 197, 187, 0.63);
+ font-size: 15px;
+ 
+}
+
+.paragraph{
+
+    font-style: italic;
+    color: rgba(138, 129, 124, 0.521);
+}
+
+#recepie-container{
+
+    grid-area: c;
+}
+
+.menu:focus{
+
+   outline: none;
+}
+
+#submit-button{
+
+    
+ border: none;
+ padding: 15px;
+ border-radius: 40px;
+ background-color: #fff;
+ border: solid 4px  rgba(254, 197, 187, 0.63);
+ color: rgb(138, 129, 124);
+ cursor: pointer;
+
+}
+
+
+#nav-container {
+
+    grid-area: b;
+    align-content: center;
+    justify-content: center;
+    gap: 20px;
+
+    border-bottom: 2px solid black;
+    
+   
+    padding:10px;
+    display: grid;
+    background-color: #fff;
+  
+}
+option{
+
+    padding: 10px;
+}
+
+
+
+footer {
+
+    grid-area: d;
+    
+    height: 100px;
+    background: linear-gradient(to bottom, rgb(250, 248, 248), rgba(252, 213, 206, 0.568));
+}

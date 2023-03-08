@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="main.js" defer> </script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div id="content-container">
+            <header>
+                <h1>Dinner planing</h1>
+                <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL</p>
+            </header>
+            <nav id="nav-container">
+
+                <h1 id="search-text">Search recepie</h1>
+
+                <form @submit.prevent="usersubmit" id="user-input">
+
+                    <input type="text" class="menu" placeholder="What do you want to eat">
+                    <button type="submit" id="submit-button">Search</button>
+
+                </form>
+
+               
+            </nav>
+
+            <div id="recepie-container">
+
+                <ul>
+                    <li v-for="recepie in result">
+                        <p>{{recepie.label}}</p>
+                        <p>{{recepie.calories}} Kcal</p>
+
+                        <img :src="recepie.img"alt="">
+
+                    <!-- <li v-for="line in ingredientLines">
+                        <p>{{line}}</p>
+                    </li> -->
+
+
+                    </li>
+                </ul>
+
+            </div>
+
+            <footer>footer</footer>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
