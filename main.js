@@ -8,8 +8,13 @@ Vue.createApp({
             selectedIndex: null,
             selectedRecepies: [],
             removeClass: true,
+
+            recepieClasses: {
+
+                'recepie-grid': false,
+                'mainContent': true,
             
-            
+            },
             result: [
 
                 {
@@ -56,7 +61,8 @@ Vue.createApp({
                 
             }));
 
-            this.removeClass = false;
+            this.recepieClasses['recepie-grid'] = true;
+            this.recepieClasses['mainContent'] = false;
 
             console.log(data.hits);
 

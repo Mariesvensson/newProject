@@ -39,7 +39,7 @@
             <main  id="main-content">
 
 
-                <div class="recepie-grid" v-for="(recepie, index) in result" :key="recepie.id" :class="{selected: index === selectedIndex}" @click="selectRecepie(index)" >
+                <div :class="recepieClasses" v-for="(recepie, index) in result" :key="recepie.id" :class="{selected: index === selectedIndex}" @click="selectRecepie(index)" >
 
                     <div class="recepie-container">
 
