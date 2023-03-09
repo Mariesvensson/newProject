@@ -10,8 +10,9 @@
 
 body {
 
-    margin-left: 250px;
-    margin-right: 250px;
+    
+
+    
     background: linear-gradient(to bottom, rgba(248, 246, 245, 0.63), rgb(250, 225, 221));
     background-repeat: no-repeat;
     background-size: cover;
@@ -19,6 +20,8 @@ body {
 }
 
 #content-container {
+
+   
 
     width: 100%;
     height: 100%;
@@ -38,8 +41,18 @@ body {
 
 img{
 
-    height: 300px;
-    width: 300px;
+    height: auto;
+    width: auto;
+    padding: 30px;
+    
+}
+
+#header-div{
+
+    border: 10px double rgba(138, 129, 124, 0.452) ;
+    padding: 20px;
+    Max-width: 750px;
+   
 }
 h1{
 
@@ -48,8 +61,14 @@ h1{
     
     
 }
+#recepie-title{
 
-#search-text{
+    padding: 5px;
+    border-bottom: 1px rgba(138, 129, 124, 0.801) solid;
+    color: rgba(138, 129, 124, 0.801);
+}
+
+#nav-title{
 
     font-size: 30px;
    
@@ -62,7 +81,7 @@ header {
     display: grid;
     height: 200px;
     grid-area: a;
-    width: 800px;
+    width: 100%;
    
   
     background: linear-gradient(to bottom, rgb(247, 246, 245), rgba(252, 213, 206, 0.575));
@@ -86,9 +105,16 @@ header {
     color: rgba(138, 129, 124, 0.521);
 }
 
-#recepie-container{
+#main-content{
 
     grid-area: c;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    margin: 20PX;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 1000px;
 }
 
 .menu:focus{
@@ -109,6 +135,50 @@ header {
 
 }
 
+.label-checkbox{
+
+    margin-bottom: 10px;
+}
+
+.save-recepie{
+
+   width: 10px;
+   height: 10px;
+   margin: 10px;
+   margin-bottom: 0;
+ 
+}
+
+.mainContent{
+
+    display: none;
+}
+
+
+.recepie-container{
+
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    max-width: 430px;
+    max-height: 500px;
+}
+
+.recepie-grid{
+
+    padding: 10px;
+   
+}
+
+.selected {
+
+    padding: 10px;
+    background-color: rgba(193, 210, 0, 0.719);
+    border-radius: 5px;
+}
+
+
 
 #nav-container {
 
@@ -117,8 +187,8 @@ header {
     justify-content: center;
     gap: 20px;
 
-    border-bottom: 2px solid black;
     
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
    
     padding:10px;
     display: grid;

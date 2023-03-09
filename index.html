@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/f62cabe7aa.js" crossorigin="anonymous"></script> -->
     <script src="main.js" defer> </script>
     <title>Document</title>
 </head>
@@ -17,12 +18,14 @@
 
         <div id="content-container">
             <header>
-                <h1>Dinner planing</h1>
-                <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL</p>
+                <div id="header-div">
+                    <h1>Dinner planing</h1>
+                    <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL"</p>
+                </div>
             </header>
             <nav id="nav-container">
 
-                <h1 id="search-text">Search recepie</h1>
+                <h1 id="nav-title">Search recepie</h1>
 
                 <form @submit.prevent="usersubmit" id="user-input">
 
@@ -31,27 +34,30 @@
 
                 </form>
 
-               
             </nav>
 
-            <div id="recepie-container">
+            <main  id="main-content">
 
-                <ul>
-                    <li v-for="recepie in result">
-                        <p>{{recepie.label}}</p>
+
+                <div class="recepie-grid" v-for="(recepie, index) in result" :key="recepie.id" :class="{selected: index === selectedIndex}" @click="selectRecepie(index)" >
+
+                    <div class="recepie-container">
+
+                        <h2 id="recepie-title">{{recepie.label}}</h2>
+                        <img :src="recepie.img" alt="">
                         <p>{{recepie.calories}} Kcal</p>
+                        <label class="label-checkbox" for="save-recepie">Add to favorites</label>
+                        <input class="save-recepie" name="save-recepie" type="checkbox" @click="saveRecepie(recepie)">
+                        <label class="label-checkbox" for="remove">Remove</label>
+                        <input class="save-recepie" name="remove" type="checkbox" @click="removeRecepie(index)">
+                       
 
-                        <img :src="recepie.img"alt="">
-
-                    <!-- <li v-for="line in ingredientLines">
-                        <p>{{line}}</p>
-                    </li> -->
+                    </div>
 
 
-                    </li>
-                </ul>
+                </div>
 
-            </div>
+            </main>
 
             <footer>footer</footer>
         </div>
