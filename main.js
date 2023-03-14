@@ -6,15 +6,24 @@ Vue.createApp({
         return {
 
             selectedIndex: null,
-            selectedRecepies: [],
+            favoriteRecepies: [],
             removeClass: true,
+            showFavorites: false,
+            shoppingList: [],
 
             recepieClasses: {
 
-                'recepie-grid': false,
-                'mainContent': true,
+                'showContent': false,
+                'hideContent': true,
             
             },
+
+            selectedClasses: {
+
+                'recepie-container': true,
+                'selected-recepie': false,
+            },
+
             result: [
 
                 {
@@ -61,26 +70,34 @@ Vue.createApp({
                 
             }));
 
-            this.recepieClasses['recepie-grid'] = true;
-            this.recepieClasses['mainContent'] = false;
+            this.recepieClasses['showContent'] = true;
+            this.recepieClasses['hideContent'] = false;
+            
 
             console.log(data.hits);
 
         },
 
-        selectRecepie( index){
+      //   selectRecepie( index){
 
-        this.selectedIndex = index;
+      //   this.selectedIndex = index;
 
-        console.log(this.isSelected)
-      },
+      //   this.result[index].selectedClasses = {
+
+      //           'recepie-container':false,
+      //           'selected-recepie': true,
+      //   }
+        
+
+      //   console.log(this.selectedIndex)
+      // },
 
       saveRecepie(recepie){
 
         this.selectedIndex = this.result.indexOf(recepie)
-        this.selectedRecepies.push(recepie)
+        this.favoriteRecepies.push(recepie)
 
-        console.log(this.selectedRecepies)
+        console.log(this.favoriteRecepies)
 
       },
 
@@ -88,7 +105,32 @@ Vue.createApp({
 
          this.result.splice(index, 1)
         
+      },
+
+      showShoppingList(){
+
+        this.result = [];
+      },
+
+      showFavories(){
+
+        this.result = [];
+        this. showFavorites = true;
+        this.selectedClasses['recepie-container'] = true;
+        this.recepieClasses['hideContent'] = false;
+        
+
+      },
+
+      removeFavorite(index){
+
+        this.favoriteRecepies.splice(index, 1)
+
+        console.log(this.favoriteRecepies)
+
       }
+
+
     }
    
     

@@ -20,40 +20,85 @@
             <header>
                 <div id="header-div">
                     <h1>Dinner planing</h1>
-                    <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL"</p>
+                    <!-- <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL"</p> -->
                 </div>
             </header>
+
             <nav id="nav-container">
 
-                <h1 id="nav-title">Search recepie</h1>
+
+
+                <!-- <h1 id="nav-title">Search recepie</h1> -->
 
                 <form @submit.prevent="usersubmit" id="user-input">
 
-                    <input type="text" class="menu" placeholder="What do you want to eat">
+                    <input type="text" class="inputBox" placeholder="Search recepie or ingredient">
                     <button type="submit" id="submit-button">Search</button>
 
                 </form>
 
+
+
+                <div>
+                    <button class="buttons" type="button" @click="showFavories()">Show favorites</button>
+                    <button class="buttons" type="button" @click="showShoppingList(favoriteRecepies)">Shopping
+                        list</button>
+                    <button class="buttons" type="button" @click="showFavories(favoriteRecepies)">Saved recepies:
+                        {{favoriteRecepies.length}}</button>
+
+                </div>
+
             </nav>
 
-            <main  id="main-content">
+            <main id="main-content">
 
 
-                <div :class="recepieClasses" v-for="(recepie, index) in result" :key="recepie.id" :class="{selected: index === selectedIndex}" @click="selectRecepie(index)" >
+                <div :class="recepieClasses" v-for="(recepie, index) in result" :key="recepie.id"
+                    :class="{selected: index === selectedIndex}">
 
-                    <div class="recepie-container">
+                    <div :class="selectedClasses">
 
                         <h2 id="recepie-title">{{recepie.label}}</h2>
+                        <p class="calories-paragraph">{{recepie.calories}} Kcal</p>
                         <img :src="recepie.img" alt="">
-                        <p>{{recepie.calories}} Kcal</p>
-                        <label class="label-checkbox" for="save-recepie">Add to favorites</label>
-                        <input class="save-recepie" name="save-recepie" type="checkbox" @click="saveRecepie(recepie)">
-                        <label class="label-checkbox" for="remove">Remove</label>
-                        <input class="save-recepie" name="remove" type="checkbox" @click="removeRecepie(index)">
-                       
+
+                        <div>
+                        <!-- <label class="label-checkbox" for="save-recepie">Add to favorites</label> -->
+                        <button class="buttons"  type="button" @click="saveRecepie(recepie)">Save</button>
+
+                        <!-- <label class="label-checkbox" for="addToManu">Add to Manu</label>
+                        <input class="save-recepie" name="addToManu" type="checkbox" @click="removeRecepie(index)"> -->
+
+                        <!-- <label class="label-checkbox" for="remove">Remove</label>
+                        <input class="save-recepie" name="remove" type="checkbox" @click="removeRecepie(index)"> -->
+                        <button class="buttons"  type="button" @click="removeRecepie(index)">Remove</button>
+                    </div>
+
 
                     </div>
 
+
+                </div>
+
+                <div v-if="showFavories" :class="recepieClasses" v-for="(favorite, index) in favoriteRecepies"
+                    :key="favorite.id">
+
+                    <div :class="selectedClasses">
+
+                        <h2 id="recepie-title">{{favorite.label}}</h2>
+                        <p class="calories-paragraph">{{favorite.calories}} Kcal</p>
+                        <img :src="favorite.img" alt="">
+
+                       
+                        <button class="buttons" type="button" :class="{ buttongreen: favorite.showIngredients }" @click="favorite.showIngredients = !favorite.showIngredients">Ingredients</button>
+                        <button class="buttons" type="button" @click="removeFavorite(index)">Delete favorite</button>
+                        
+                        <ul v-if="favorite.showIngredients">
+                            <h3 id="ingredient-title">Ingredients</h3>
+                          <li v-for="(ingredient, index) in favorite.ingredients" :key="index">{{ingredient.text}}</li>
+                        </ul>
+
+                    </div> 
 
                 </div>
 
