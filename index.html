@@ -41,7 +41,7 @@
 
                 <div>
                     <button class="buttons" type="button" @click="showFavories()">Show favorites</button>
-                    <button class="buttons" type="button" @click="showShoppingList(shoppinglist)">Shopping
+                    <button class="buttons" type="button" @click="showUserShoppingList = !showUserShoppingList">Shopping
                         list</button>
                     <button class="buttons" type="button" @click="showFavories(favoriteRecepies)">Saved recepies:
                         {{favoriteRecepies.length}}</button>
@@ -63,11 +63,11 @@
                         <img :src="recepie.img" alt="">
 
                         <div>
-                       
-                        <button class="buttons"  type="button" @click="saveRecepie(recepie)">Save</button>
 
-                        <button class="buttons"  type="button" @click="removeRecepie(index)">Remove</button>
-                    </div>
+                            <button class="buttons" type="button" @click="saveRecepie(recepie)">Save</button>
+
+                            <button class="buttons" type="button" @click="removeRecepie(index)">Remove</button>
+                        </div>
 
 
                     </div>
@@ -84,18 +84,31 @@
                         <p class="calories-paragraph">{{favorite.calories}} Kcal</p>
                         <img :src="favorite.img" alt="">
 
-                       
-                        <button class="buttons" type="button" :class="{ buttongreen: favorite.showIngredients }" @click="favorite.showIngredients = !favorite.showIngredients">Ingredients</button>
+
+                        <button class="buttons" type="button" :class="{ buttongreen: favorite.showIngredients }"
+                            @click="favorite.showIngredients = !favorite.showIngredients">Ingredients</button>
                         <button class="buttons" type="button" @click="removeFavorite(index)">Delete favorite</button>
-                        <button class="buttons" type="button" @click="AddtoShoppingList(favorite)">Add to shoppinglist</button>
+                        <button class="buttons" type="button" @click="AddtoShoppingList(favorite)">Add to
+                            shoppinglist</button>
                         <ul v-if="favorite.showIngredients">
                             <h3 id="ingredient-title">Ingredients</h3>
-                          <li v-for="(ingredient, index) in favorite.ingredients" :key="index">{{ingredient.text}}</li>
+                            <li v-for="(ingredient, index) in favorite.ingredients" :key="index">{{ingredient.text}}
+                            </li>
                         </ul>
 
-                    </div> 
+                    </div>
 
                 </div>
+
+              
+                        <ul v-if="showUserShoppingList" :class="recepieClasses"
+                        v-for="(quantity, ingredient) in filteredShoppingDictionary ">
+                            <li>{{quantity}} {{ingredient}}</li>
+                        </ul>
+
+                    
+
+              
 
             </main>
 

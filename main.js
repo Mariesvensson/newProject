@@ -9,7 +9,14 @@ Vue.createApp({
       favoriteRecepies: [],
       removeClass: true,
       showFavorites: false,
+      showUserShoppingList: false,
       shoppingList: [],
+
+      filteredShoppingDictionary: {
+
+        Value: '',
+        key: ''
+      },
 
 
       recepieClasses: {
@@ -32,7 +39,6 @@ Vue.createApp({
           label: '',
           calories: '',
           img: '',
-          // ingredientName: [],
           ingredients: [],
           ingredientLines: [],
 
@@ -41,13 +47,7 @@ Vue.createApp({
     }
   },
 
-
-
-
-
   methods: {
-
-
 
     async usersubmit() {
 
@@ -66,11 +66,6 @@ Vue.createApp({
         img: hit.recipe.images.REGULAR.url,
         ingredients: hit.recipe.ingredients,
         ingredientLines: hit.recipe.ingredientLines,
-
-        // ingredientName: hit.recipe.ingredients.food,
-        // IngredientMeasure: hit.recipe.ingredients.measure,
-        // ingredientQuantity: hit.recipe.ingredients.quantity,
-
 
       }));
 
@@ -122,53 +117,98 @@ Vue.createApp({
 
     },
 
+
+
     AddtoShoppingList(recepie) {
 
       console.log(recepie)
 
-      let item = recepie.ingredients;
+      let ingredietsArray = recepie.ingredients;
 
-      console.log(item);
-
-
-
-      for (let i = 0; i < item.length; i++) {
-
-        let innerArray = item[i].food;
-
-        console.log(innerArray);
-
-        for (let j = 0; j < innerArray.length; j++) {
-
-          let value = innerArray[j].food;
+      console.log(ingredietsArray);
 
 
-          console.log(value); 
+
+      for (let i = 0; i < ingredietsArray.length; i++) {
+
+        let measure = ingredietsArray[i].measure;
+
+        if (measure === '' || measure === '<unit>') {
+
+          measure = null;
         }
+
+
+
+        let ingredientsInfo = {
+
+          name: ingredietsArray[i].food.toLowerCase(),
+          measure: measure,
+          quantity: ingredietsArray[i].quantity,
+
+
+        }
+        this.shoppingList.push(ingredientsInfo)
+        console.log(ingredientsInfo)
       }
 
-        console.log(innerArray) [0].food
+
+
       
-      
-
-
-
-
-
-
+      this.filterShoppinglist(this.shoppingList);
 
     },
 
-    showShoppingList(shoppingList) {
+
+
+    filterShoppinglist(shoppinglist) {
+
+      this.filteredShoppingDictionary = shoppinglist.reduce((dict, ingredient) => {
+  
+        if (dict.hasOwnProperty(ingredient.name)) {
+  
+          dict[ingredient.name] += ingredient.quantity
+  
+        }
+        else {
+  
+          dict[ingredient.name] = ingredient.quantity;
+  
+  
+        }
+  
+        return dict;
+      }, {})
+  
+      console.log(this.filteredShoppingDictionary)
+  
+  
+  
+  
+  
+  
+      //  checkShoppingList(filteredShoppingDictionary);
+  
+    },
 
 
 
-      console.log(this.shoppingList)
+    // console.log(this.shoppingList)
 
-    }
+  },
 
 
-  }
+
+  // showShoppingList(shoppingList) {
+
+
+
+  //   console.log(this.shoppingList)
+
+  // }
+
+
+
 
 
 
