@@ -41,7 +41,7 @@
 
                 <div>
                     <button class="buttons" type="button" @click="showFavories()">Show favorites</button>
-                    <button class="buttons" type="button" @click="showShoppingList(favoriteRecepies)">Shopping
+                    <button class="buttons" type="button" @click="showShoppingList(shoppinglist)">Shopping
                         list</button>
                     <button class="buttons" type="button" @click="showFavories(favoriteRecepies)">Saved recepies:
                         {{favoriteRecepies.length}}</button>
@@ -63,14 +63,9 @@
                         <img :src="recepie.img" alt="">
 
                         <div>
-                        <!-- <label class="label-checkbox" for="save-recepie">Add to favorites</label> -->
+                       
                         <button class="buttons"  type="button" @click="saveRecepie(recepie)">Save</button>
 
-                        <!-- <label class="label-checkbox" for="addToManu">Add to Manu</label>
-                        <input class="save-recepie" name="addToManu" type="checkbox" @click="removeRecepie(index)"> -->
-
-                        <!-- <label class="label-checkbox" for="remove">Remove</label>
-                        <input class="save-recepie" name="remove" type="checkbox" @click="removeRecepie(index)"> -->
                         <button class="buttons"  type="button" @click="removeRecepie(index)">Remove</button>
                     </div>
 
@@ -92,7 +87,7 @@
                        
                         <button class="buttons" type="button" :class="{ buttongreen: favorite.showIngredients }" @click="favorite.showIngredients = !favorite.showIngredients">Ingredients</button>
                         <button class="buttons" type="button" @click="removeFavorite(index)">Delete favorite</button>
-                        
+                        <button class="buttons" type="button" @click="AddtoShoppingList(favorite)">Add to shoppinglist</button>
                         <ul v-if="favorite.showIngredients">
                             <h3 id="ingredient-title">Ingredients</h3>
                           <li v-for="(ingredient, index) in favorite.ingredients" :key="index">{{ingredient.text}}</li>

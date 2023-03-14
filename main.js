@@ -1,140 +1,181 @@
 Vue.createApp({
 
 
-    data() {
+  data() {
 
-        return {
+    return {
 
-            selectedIndex: null,
-            favoriteRecepies: [],
-            removeClass: true,
-            showFavorites: false,
-            shoppingList: [],
-
-            recepieClasses: {
-
-                'showContent': false,
-                'hideContent': true,
-            
-            },
-
-            selectedClasses: {
-
-                'recepie-container': true,
-                'selected-recepie': false,
-            },
-
-            result: [
-
-                {
-                    id: '',
-                    label: '',
-                    calories: '',
-                    img: '',
-                    ingredients: [],
-                    ingredientLines: [],
-
-                    
+      selectedIndex: null,
+      favoriteRecepies: [],
+      removeClass: true,
+      showFavorites: false,
+      shoppingList: [],
 
 
+      recepieClasses: {
 
-                }
-            ]
+        'showContent': false,
+        'hideContent': true,
+
+      },
+
+      selectedClasses: {
+
+        'recepie-container': true,
+        'selected-recepie': false,
+      },
+
+      result: [
+
+        {
+          id: '',
+          label: '',
+          calories: '',
+          img: '',
+          // ingredientName: [],
+          ingredients: [],
+          ingredientLines: [],
+
         }
+      ]
+    }
+  },
+
+
+
+
+
+  methods: {
+
+
+
+    async usersubmit() {
+
+
+      let input = document.querySelector('input').value;
+      let recepieDiv = document.querySelector('.main-content');
+
+      let response = await fetch('https://api.edamam.com/api/recipes/v2?type=public&q=' + input + '&app_id=b7754906&app_key=c702a1785ba3ec1968284b35d271f31c')
+
+      let data = await response.json();
+      this.result = data.hits.map(hit => ({
+
+        id: hit.recipe.uri,
+        calories: Math.round(hit.recipe.calories),
+        label: hit.recipe.label,
+        img: hit.recipe.images.REGULAR.url,
+        ingredients: hit.recipe.ingredients,
+        ingredientLines: hit.recipe.ingredientLines,
+
+        // ingredientName: hit.recipe.ingredients.food,
+        // IngredientMeasure: hit.recipe.ingredients.measure,
+        // ingredientQuantity: hit.recipe.ingredients.quantity,
+
+
+      }));
+
+      this.recepieClasses['showContent'] = true;
+      this.recepieClasses['hideContent'] = false;
+
+
+      console.log(data.hits);
+
     },
 
-   
 
-    methods: {
 
-        
+    saveRecepie(recepie) {
 
-        async usersubmit() {
+      this.selectedIndex = this.result.indexOf(recepie)
+      this.favoriteRecepies.push(recepie)
 
-            
-            let input = document.querySelector('input').value;
-            let recepieDiv = document.querySelector('.main-content');
+      console.log(this.favoriteRecepies)
 
-            let response = await fetch('https://api.edamam.com/api/recipes/v2?type=public&q=' + input + '&app_id=b7754906&app_key=c702a1785ba3ec1968284b35d271f31c')
+    },
 
-            let data = await response.json();
-            this.result = data.hits.map(hit => ({
+    removeRecepie(index) {
 
-                id: hit.recipe.uri,
-                calories: Math.round(hit.recipe.calories),
-                label: hit.recipe.label,
-                img: hit.recipe.images.REGULAR.url,
-                ingredients: hit.recipe.ingredients,
-                ingredientLines: hit.recipe.ingredientLines
-                
-                
-            }));
+      this.result.splice(index, 1)
 
-            this.recepieClasses['showContent'] = true;
-            this.recepieClasses['hideContent'] = false;
-            
+    },
 
-            console.log(data.hits);
+    showShoppingList() {
 
-        },
+      this.result = [];
+    },
 
-      //   selectRecepie( index){
+    showFavories() {
 
-      //   this.selectedIndex = index;
+      this.result = [];
+      this.showFavorites = true;
+      this.selectedClasses['recepie-container'] = true;
+      this.recepieClasses['hideContent'] = false;
 
-      //   this.result[index].selectedClasses = {
 
-      //           'recepie-container':false,
-      //           'selected-recepie': true,
-      //   }
-        
+    },
 
-      //   console.log(this.selectedIndex)
-      // },
+    removeFavorite(index) {
 
-      saveRecepie(recepie){
+      this.favoriteRecepies.splice(index, 1)
 
-        this.selectedIndex = this.result.indexOf(recepie)
-        this.favoriteRecepies.push(recepie)
+      console.log(this.favoriteRecepies)
 
-        console.log(this.favoriteRecepies)
+    },
 
-      },
+    AddtoShoppingList(recepie) {
 
-      removeRecepie(index){
+      console.log(recepie)
 
-         this.result.splice(index, 1)
-        
-      },
+      let item = recepie.ingredients;
 
-      showShoppingList(){
+      console.log(item);
 
-        this.result = [];
-      },
 
-      showFavories(){
 
-        this.result = [];
-        this. showFavorites = true;
-        this.selectedClasses['recepie-container'] = true;
-        this.recepieClasses['hideContent'] = false;
-        
+      for (let i = 0; i < item.length; i++) {
 
-      },
+        let innerArray = item[i].food;
 
-      removeFavorite(index){
+        console.log(innerArray);
 
-        this.favoriteRecepies.splice(index, 1)
+        for (let j = 0; j < innerArray.length; j++) {
 
-        console.log(this.favoriteRecepies)
+          let value = innerArray[j].food;
 
+
+          console.log(value); 
+        }
       }
 
+        console.log(innerArray) [0].food
+      
+      
+
+
+
+
+
+
+
+    },
+
+    showShoppingList(shoppingList) {
+
+
+
+      console.log(this.shoppingList)
 
     }
-   
-    
-    
+
+
+  }
+
+
+
+
+
+
+
 }).mount('#app');
 
 

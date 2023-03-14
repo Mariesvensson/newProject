@@ -10,9 +10,11 @@
 
 body {
 
-    background: linear-gradient(to bottom, rgba(248, 246, 245, 0.63), rgb(250, 225, 221));
+    /* background: linear-gradient(to bottom, rgba(248, 246, 245, 0.63), rgb(250, 225, 221)); */
+    background-image: url('img.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 100vh;
     
 }
 
@@ -50,12 +52,14 @@ img{
     border: 10px double rgba(138, 129, 124, 0.452) ;
     padding: 20px;
     Max-width: 750px;
+    background-color: #fff;
    
 }
 h1{
 
     font-size: 80px;
     color: rgba(138, 129, 124, 0.801);
+    max-width: 100%;
     
     
 }
@@ -75,8 +79,8 @@ header {
     grid-area: a;
     width: 100%;
    
-  
-    background: linear-gradient(to bottom, rgb(247, 246, 245), rgba(252, 213, 206, 0.575));
+/*   
+    background: linear-gradient(to bottom, rgb(247, 246, 245), rgba(252, 213, 206, 0.575)); */
 
 }
 
@@ -123,7 +127,7 @@ header {
     }
 }
 
-.menu:focus{
+.inputBox:focus{
 
    outline: none;
 }
@@ -269,5 +273,5 @@ footer {
     grid-area: d;
     
     height: 100px;
-    background: linear-gradient(to bottom, rgb(250, 248, 248), rgba(252, 213, 206, 0.568));
+    /* background: linear-gradient(to bottom, rgb(250, 248, 248), rgba(252, 213, 206, 0.568)); */
 }
