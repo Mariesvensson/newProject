@@ -12,8 +12,8 @@ body {
 
     /* background: linear-gradient(to bottom, rgba(248, 246, 245, 0.63), rgb(250, 225, 221)); */
     background-image: url('img.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat;
+    background-size: contain;
     min-height: 100vh;
     
 }
@@ -238,18 +238,31 @@ border: none;
     /* height: auto; */
 }
 
+.showList{
+
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    margin-left: 280px;
+    
+    /* height: auto; */
+
+}
+
+
+
 .showContent{
 
     padding: 10px;
    
 }
 
-/* .selected-recepie{
+.selected-recepie{
 
-    padding: 10px;
-    background-color: rgba(193, 210, 0, 0.719);
-    border-radius: 5px;
-} */
+   display: none;
+}
 
 
 
@@ -266,6 +279,25 @@ border: none;
 
     grid-template-columns: repeat(2, 1fr);
   
+}
+
+.showList{
+
+    background-color: rgb(249, 247, 211);
+    
+}
+li{
+
+    padding: 10px;
+    /* border-bottom: 1px rgb(102, 99, 92) solid;
+    border-left: 1px rgb(102, 99, 92) solid;
+    border-right: 1px rgb(102, 99, 92) solid; */
+    border: 1px rgb(102, 99, 92) solid;
+
+}
+li::marker{
+
+    color:  rgb(249, 247, 211) ;
 }
 
 footer {

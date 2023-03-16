@@ -14,7 +14,8 @@ Vue.createApp({
 
       filteredShoppingDictionary: {
 
-        Value: '',
+        value2: '',
+        Value1: '',
         key: ''
       },
 
@@ -30,6 +31,14 @@ Vue.createApp({
 
         'recepie-container': true,
         'selected-recepie': false,
+      },
+
+      showlistClass:{
+
+        'showList': false,
+        'hideList': true
+
+
       },
 
       result: [
@@ -73,7 +82,7 @@ Vue.createApp({
       this.recepieClasses['hideContent'] = false;
 
 
-      console.log(data.hits);
+      // console.log(data.hits);
 
     },
 
@@ -84,7 +93,7 @@ Vue.createApp({
       this.selectedIndex = this.result.indexOf(recepie)
       this.favoriteRecepies.push(recepie)
 
-      console.log(this.favoriteRecepies)
+      // console.log(this.favoriteRecepies)
 
     },
 
@@ -113,7 +122,7 @@ Vue.createApp({
 
       this.favoriteRecepies.splice(index, 1)
 
-      console.log(this.favoriteRecepies)
+      // console.log(this.favoriteRecepies)
 
     },
 
@@ -125,7 +134,7 @@ Vue.createApp({
 
       let ingredietsArray = recepie.ingredients;
 
-      console.log(ingredietsArray);
+      // console.log(ingredietsArray);
 
 
 
@@ -144,8 +153,7 @@ Vue.createApp({
 
           name: ingredietsArray[i].food.toLowerCase(),
           measure: measure,
-          quantity: ingredietsArray[i].quantity,
-
+          quantity: Math.round(ingredietsArray[i].quantity,1)
 
         }
         this.shoppingList.push(ingredientsInfo)
@@ -163,56 +171,68 @@ Vue.createApp({
 
     filterShoppinglist(shoppinglist) {
 
-      this.filteredShoppingDictionary = shoppinglist.reduce((dict, ingredient) => {
+      this.filteredShoppingDictionary = shoppinglist.reduce((filteredShoppingDictionary, ingredient) => {
   
-        if (dict.hasOwnProperty(ingredient.name)) {
+        if (filteredShoppingDictionary.hasOwnProperty(ingredient.name)) {
   
-          dict[ingredient.name] += ingredient.quantity
-  
+            if(ingredient.quantity === 0 || ingredient.quantity === '0'){
+
+              return;
+            }
+            else{
+
+              filteredShoppingDictionary[ingredient.name].quantity += ingredient.quantity;
+            }
+
+         
+          
         }
         else {
+
+          if (ingredient.quantity === 0 || ingredient.quantity === '0'){
+
+            
+            filteredShoppingDictionary[ingredient.name] = {quantity: '', measure: ingredient.measure, name: ingredient.name};
+
+          }
+          else{
+
+            filteredShoppingDictionary[ingredient.name] = {quantity: ingredient.quantity, measure: ingredient.measure, name: ingredient.name};
+
+          }
   
-          dict[ingredient.name] = ingredient.quantity;
+          
+          
   
   
         }
   
-        return dict;
+        return filteredShoppingDictionary;
       }, {})
+
+    
   
       console.log(this.filteredShoppingDictionary)
   
   
   
-  
-  
-  
-      //  checkShoppingList(filteredShoppingDictionary);
-  
     },
 
+    showShoppingList(){
 
+      this.showUserShoppingList = true;
+      this.selectedClasses['selected-recepie'] = true;
+      this.selectedClasses['recepie-container'] = false;
+      this.showlistClass['showList'] = true
+      this.showlistClass['hideList'] = false
+      this.recepieClasses[ 'showContent'] = false
+      this.recepieClasses[ 'hideContent'] = true
+    }
 
-    // console.log(this.shoppingList)
+    
+
 
   },
-
-
-
-  // showShoppingList(shoppingList) {
-
-
-
-  //   console.log(this.shoppingList)
-
-  // }
-
-
-
-
-
-
-
 
 
 

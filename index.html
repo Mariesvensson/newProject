@@ -41,7 +41,7 @@
 
                 <div>
                     <button class="buttons" type="button" @click="showFavories()">Show favorites</button>
-                    <button class="buttons" type="button" @click="showUserShoppingList = !showUserShoppingList">Shopping
+                    <button class="buttons" type="button" @click="showShoppingList()">Shopping
                         list</button>
                     <button class="buttons" type="button" @click="showFavories(favoriteRecepies)">Saved recepies:
                         {{favoriteRecepies.length}}</button>
@@ -97,18 +97,18 @@
                         </ul>
 
                     </div>
-
+                    
+                </div>
+                <div :class="showlistClass">
+                    <ul>
+                        <li v-if="showUserShoppingList" 
+                        v-for="(ingredient) in filteredShoppingDictionary ">
+                        {{ ingredient.quantity }}  {{ ingredient.measure }} {{ ingredient.name }}</li>
+                    </ul>
                 </div>
 
-              
-                        <ul v-if="showUserShoppingList" :class="recepieClasses"
-                        v-for="(quantity, ingredient) in filteredShoppingDictionary ">
-                            <li>{{quantity}} {{ingredient}}</li>
-                        </ul>
 
-                    
 
-              
 
             </main>
 
