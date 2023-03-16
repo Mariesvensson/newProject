@@ -11,6 +11,7 @@ Vue.createApp({
       showFavorites: false,
       showUserShoppingList: false,
       shoppingList: [],
+      changeColor: false,
 
       filteredShoppingDictionary: {
 
@@ -20,7 +21,7 @@ Vue.createApp({
       },
 
 
-      recepieClasses: {
+      contentVisability: {
 
         'showContent': false,
         'hideContent': true,
@@ -78,8 +79,8 @@ Vue.createApp({
 
       }));
 
-      this.recepieClasses['showContent'] = true;
-      this.recepieClasses['hideContent'] = false;
+      this.contentVisability['showContent'] = true;
+      this.contentVisability['hideContent'] = false;
 
 
       // console.log(data.hits);
@@ -103,17 +104,17 @@ Vue.createApp({
 
     },
 
-    showShoppingList() {
+    // showShoppingList() {
 
-      this.result = [];
-    },
+    //   this.result = [];
+    // },
 
     showFavories() {
 
       this.result = [];
       this.showFavorites = true;
       this.selectedClasses['recepie-container'] = true;
-      this.recepieClasses['hideContent'] = false;
+      // this.recepieClasses['hideContent'] = false;
 
 
     },
@@ -162,7 +163,7 @@ Vue.createApp({
 
 
 
-      
+      this.changeColor = true;
       this.filterShoppinglist(this.shoppingList);
 
     },
@@ -221,12 +222,15 @@ Vue.createApp({
     showShoppingList(){
 
       this.showUserShoppingList = true;
+
+      // Döljer receptDiv och FavoritDiv
       this.selectedClasses['selected-recepie'] = true;
-      this.selectedClasses['recepie-container'] = false;
+      // 
+      // this.selectedClasses['recepie-container'] = false;
       this.showlistClass['showList'] = true
       this.showlistClass['hideList'] = false
-      this.recepieClasses[ 'showContent'] = false
-      this.recepieClasses[ 'hideContent'] = true
+      this.contentVisability[ 'showContent'] = false
+      this.contentVisability[ 'hideContent'] = true
     }
 
     

@@ -50,9 +50,10 @@ img{
 #header-div{
 
     border: 10px double rgba(138, 129, 124, 0.452) ;
-    padding: 20px;
-    Max-width: 750px;
+    padding: 30px;
+    max-width: 890px;
     background-color: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
    
 }
 h1{
@@ -77,7 +78,9 @@ header {
     display: grid;
     height: 200px;
     grid-area: a;
-    width: 100%;
+    width: 100hv;
+    background-color: #fdfdfdad;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
    
 /*   
     background: linear-gradient(to bottom, rgb(247, 246, 245), rgba(252, 213, 206, 0.575)); */
@@ -219,7 +222,7 @@ border: none;
     
 }
 
-.buttongreen{
+.buttonIsActive{
 
     /* border: 3px solid rgb(240, 128, 128); */
     background-color: rgba(240, 128, 128, 0.247);
@@ -253,11 +256,11 @@ border: none;
 
 
 
-.showContent{
+/* .showContent{
 
     padding: 10px;
    
-}
+} */
 
 .selected-recepie{
 
@@ -269,14 +272,17 @@ border: none;
 #nav-container {
 
     grid-area: b;
-    align-content: center;
-    justify-content: center;
+    /* align-content: center;
+    justify-content: center; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
     gap: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     padding:10px;
     display: grid;
-    background-color: #fff;
-
+    background-color: #ffffff91;
+    width: 100%;
     grid-template-columns: repeat(2, 1fr);
   
 }
@@ -289,10 +295,8 @@ border: none;
 li{
 
     padding: 10px;
-    /* border-bottom: 1px rgb(102, 99, 92) solid;
-    border-left: 1px rgb(102, 99, 92) solid;
-    border-right: 1px rgb(102, 99, 92) solid; */
-    border: 1px rgb(102, 99, 92) solid;
+    border: 1px rgba(102, 99, 92, 0.363) solid;
+   
 
 }
 li::marker{

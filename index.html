@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- <script src="https://kit.fontawesome.com/f62cabe7aa.js" crossorigin="anonymous"></script> -->
     <script src="main.js" defer> </script>
     <title>Document</title>
 </head>
@@ -20,7 +19,7 @@
             <header>
                 <div id="header-div">
                     <h1>Dinner planing</h1>
-                    <!-- <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL"</p> -->
+                    <p class="paragraph">"A RECIPE IS A STORY THAT ENDS WITH A GOOD MEAL"</p>
                 </div>
             </header>
 
@@ -37,14 +36,9 @@
 
                 </form>
 
-
-
                 <div>
-                    <button class="buttons" type="button" @click="showFavories()">Show favorites</button>
-                    <button class="buttons" type="button" @click="showShoppingList()">Shopping
-                        list</button>
-                    <button class="buttons" type="button" @click="showFavories(favoriteRecepies)">Saved recepies:
-                        {{favoriteRecepies.length}}</button>
+                    <button class="buttons" type="button" @click="showFavories()">Show favorites {{favoriteRecepies.length}}</button>
+                    <button class="buttons" type="button" @click="showShoppingList()">Shopping list</button>               
 
                 </div>
 
@@ -52,10 +46,13 @@
 
             <main id="main-content">
 
+                <!-- recepieClasses bestämmer synliget.  -->
+                <!-- Här synliggörs alla recept i submiteventet ShowContent = true -->
+                <!-- och döljs när knappen visa favorit clickas detta ändras i showFavories() -->
+                <div :class="contentVisability" v-for="(recepie, index) in result" :key="recepie.id">
 
-                <div :class="recepieClasses" v-for="(recepie, index) in result" :key="recepie.id"
-                    :class="{selected: index === selectedIndex}">
-
+                    <!-- SelectedClass bestämmer utseendet -->
+                    <!-- recepie-Container är satt till true från början -->
                     <div :class="selectedClasses">
 
                         <h2 id="recepie-title">{{recepie.label}}</h2>
@@ -63,33 +60,39 @@
                         <img :src="recepie.img" alt="">
 
                         <div>
-
                             <button class="buttons" type="button" @click="saveRecepie(recepie)">Save</button>
-
                             <button class="buttons" type="button" @click="removeRecepie(index)">Remove</button>
                         </div>
-
-
                     </div>
 
-
                 </div>
-
-                <div v-if="showFavories" :class="recepieClasses" v-for="(favorite, index) in favoriteRecepies"
+                    <!-- RecepieClasses -->
+                    <!-- ShowFavories ändras till true när 'Visa favoriter knappen clickas' i showFavories() -->
+                    <!-- Result sätts till tom sträng och alla recept försvinner från sidan -->
+                    <!-- Här skulle man istället kunna dölja recepten med en klass, och göra knappar för att gå tillbaka till resultatet -->
+                    <!-- RecepieClasses är satt till true sedan innan i submiteventet -->
+                <div v-if="showFavories" :class="contentVisability" v-for="(favorite, index) in favoriteRecepies"
                     :key="favorite.id">
-
+                    <!-- selectedClass bestämmer utseendet -->
+                    <!-- SelectedClass är satt till true från början -->
                     <div :class="selectedClasses">
 
                         <h2 id="recepie-title">{{favorite.label}}</h2>
                         <p class="calories-paragraph">{{favorite.calories}} Kcal</p>
                         <img :src="favorite.img" alt="">
 
-
-                        <button class="buttons" type="button" :class="{ buttongreen: favorite.showIngredients }"
+                        <!-- Klassen buttonGreen kommer att bli aktiv när knappen klickas och avaktiveras när knappen klickas igen -->
+                        <!-- favorit.showIngredients är satt till false från start -->
+                        <button class="buttons" type="button" :class="{ buttonIsActive: favorite.showIngredients }"
                             @click="favorite.showIngredients = !favorite.showIngredients">Ingredients</button>
+
+                            <!-- Klassen changeColor kommer bli aktiv när knappen klickas.  -->
                         <button class="buttons" type="button" @click="removeFavorite(index)">Delete favorite</button>
-                        <button class="buttons" type="button" @click="AddtoShoppingList(favorite)">Add to
+                        <button class="buttons" type="button" :class="{buttonIsActive: changeColor}" @click="AddtoShoppingList(favorite)">Add to
                             shoppinglist</button>
+
+                            <!-- Ingridienserna kommer visas när knappen ingredients klickas  -->
+                            
                         <ul v-if="favorite.showIngredients">
                             <h3 id="ingredient-title">Ingredients</h3>
                             <li v-for="(ingredient, index) in favorite.ingredients" :key="index">{{ingredient.text}}
@@ -99,6 +102,8 @@
                     </div>
                     
                 </div>
+
+                <!-- Detta kommer visas när knappen visa inköpslista klickas -->
                 <div :class="showlistClass">
                     <ul>
                         <li v-if="showUserShoppingList" 
