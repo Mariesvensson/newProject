@@ -25,8 +25,6 @@
 
             <nav id="nav-container">
 
-
-
                 <!-- <h1 id="nav-title">Search recepie</h1> -->
 
                 <form @submit.prevent="usersubmit" id="user-input">
@@ -46,6 +44,12 @@
 
             <main id="main-content">
 
+                <!-- <div>
+                <button class="buttons pageNavigatonbutton" type="button" @click="">&#60;</button>
+                <button class="buttons  pageNavigatonbutton" type="button" @click="">&#62;</button>  
+                </div>
+  -->
+
                 <!-- recepieClasses bestämmer synliget.  -->
                 <!-- Här synliggörs alla recept i submiteventet ShowContent = true -->
                 <!-- och döljs när knappen visa favorit clickas detta ändras i showFavories() -->
@@ -64,6 +68,8 @@
                             <button class="buttons" type="button" @click="removeRecepie(index)">Remove</button>
                         </div>
                     </div>
+
+                    
 
                 </div>
                     <!-- RecepieClasses -->

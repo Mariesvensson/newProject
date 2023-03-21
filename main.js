@@ -54,7 +54,10 @@ Vue.createApp({
 
         }
       ]
+
+      
     }
+    
   },
 
   methods: {
@@ -94,8 +97,17 @@ Vue.createApp({
       this.selectedIndex = this.result.indexOf(recepie)
       this.favoriteRecepies.push(recepie)
 
-      // console.log(this.favoriteRecepies)
+     storeData();
 
+    },
+
+    storeData(){
+    
+      let SaveFavoritesRecepies = JSON.stringify(this.favoriteRecepies);
+      let filename = 'favoriteRecepies.json';
+    
+
+      console.log()
     },
 
     removeRecepie(index) {
