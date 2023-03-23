@@ -75,13 +75,27 @@
 
                         <button class="buttons" type="button" @click="removeFavorite(index)">Delete</button>
                         
-                        <button class="buttons" type="button"
-                        @click="drawDiagram(favorite)">health</button>
-
-                            <canvas: id="newCanvas" width="350" height="100"></canvas>
+                       
 
                         <button class="buttons" type="button" @click="AddtoShoppingList(favorite)">Add to
                             shoppinglist</button>
+                            <div>
+
+                                <div>
+                                    <ul>
+                                        <li>dslfmsfd</li>
+                                        <li>ggg</li>
+                                        <li>sgg</li>
+                                    </ul>
+                                </div>
+
+                                <div id="diagram-div">
+                                    <canvas :id="['canvas-' + index]" width="250" height="250"></canvas>
+                                </div>
+
+                            </div>
+                            
+                            
 
                         <ul v-if="favorite.showIngredients">
                             <h3 id="ingredient-title">Ingredients</h3>

@@ -1,6 +1,4 @@
 
-
-
 Vue.createApp({
 
 
@@ -17,6 +15,25 @@ Vue.createApp({
       changeColor: false,
       showRecepies: false,
       input: '',
+      options: {
+        animationEnabled: true,
+        title:{
+          text: "Vue.js Basic Column Chart"
+        },
+
+        data: [{
+          type: "column",
+          dataPoints: [
+            { label: "apple",  y: 10 },
+            { label: "orange", y: 15 },
+            { label: "banana", y: 25 },
+            { label: "mango",  y: 30 },
+            { label: "grape",  y: 28 }
+          ]
+        }]
+      },
+
+
 
       // showDiagram: false,
 
@@ -65,7 +82,14 @@ Vue.createApp({
     }
   },
 
+  mounted(){
+
+    this.favoriteRecepies.forEach((r,index)=> this.drawDiagram(r,index) );
+  },
+
   methods: {
+
+   
 
     usersubmit() {
 
@@ -212,7 +236,7 @@ Vue.createApp({
       }, {})
     },
 
-    drawDiagram(favorit) {
+    drawDiagram(favorit, index) {
 
       if(this.showDiagram === false){
 
@@ -223,6 +247,7 @@ Vue.createApp({
         this.showDiagram = false.
         return;
       }
+   
 
       let protein = favorit.protein
       let carbs = favorit.carbs
@@ -233,29 +258,55 @@ Vue.createApp({
       let carbsPercent = Math.round(carbs / totalWeight * 100)
       let fatPercent = Math.round(fat / totalWeight * 100)
 
-      const canvas = document.getElementById('newCanvas');
+      const canvas = document.getElementById('canvas-' + index);
       const c = canvas.getContext('2d');
-      const w = canvas.width
-      const h = canvas.height
 
-      const proteinHeight = h * (proteinPercent / 100);
-      const carbsHeight = h * (carbsPercent / 100);
-      const fatHeight = h * (fatPercent / 100);
+      let data = [protein, carbs, fat];
+      let total = protein + carbs + fat;
+      let colors = ['#000', 'green', 'blue'];
+      let lastEnd = 0;
 
-      c.fillStyle = 'lightpink';
+      data.forEach((d, index)=> {
 
-      c.font = '12px Arial';
-      c.textAlign = 'center';
-      c.fillText('Protein', w / 6, h - proteinHeight - 5);
-      c.fillRect(35, h - proteinHeight, 70, proteinHeight);
+        c.fillStyle = colors[index];
+        c.beginPath();
+        c.moveTo(canvas.width / 2 , canvas.height / 2);
+        c.arc( 
+          canvas.width/ 2,
+          canvas.height / 2,
+          canvas.height / 2,
+          lastEnd,
+          lastEnd + Math.PI * 2 * (d/total),
+          false
+        )
 
-      c.fillStyle = 'lightcoral';
-      c.fillText('Carbs', w / 2, h - carbsHeight - 5);
-      c.fillRect(140, h - carbsHeight, 70, carbsHeight);
+        c.lineTo(canvas.width / 2 , canvas.height / 2);
+        c.fill();
+        lastEnd += Math.PI * 2 * (d/total);
+      })
 
-      c.fillStyle = 'palevioletred';
-      c.fillText('Fat', 5 * w / 6, h - fatHeight - 5);
-      c.fillRect( 245, h - fatHeight, 70, fatHeight);
+
+      // const w = canvas.width
+      // const h = canvas.height
+
+      // const proteinHeight = h * (proteinPercent / 100);
+      // const carbsHeight = h * (carbsPercent / 100);
+      // const fatHeight = h * (fatPercent / 100);
+
+      // c.fillStyle = 'lightpink';
+
+      // c.font = '12px Arial';
+      // c.textAlign = 'center';
+      // c.fillText('Protein', w / 6, h - proteinHeight - 5);
+      // c.fillRect(35, h - proteinHeight, 70, proteinHeight);
+
+      // c.fillStyle = 'lightcoral';
+      // c.fillText('Carbs', w / 2, h - carbsHeight - 5);
+      // c.fillRect(140, h - carbsHeight, 70, carbsHeight);
+
+      // c.fillStyle = 'palevioletred';
+      // c.fillText('Fat', 5 * w / 6, h - fatHeight - 5);
+      // c.fillRect( 245, h - fatHeight, 70, fatHeight);
     },
 
     showShoppingList() {
@@ -266,6 +317,13 @@ Vue.createApp({
       this.showlistClass['hideList'] = false
       this.contentVisability['showContent'] = false
       this.contentVisability['hideContent'] = true
+    },
+
+    newmethod(){
+
+
+
+
     }
   },
 }).mount('#app');
