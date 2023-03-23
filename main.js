@@ -1,3 +1,6 @@
+
+
+
 Vue.createApp({
 
 
@@ -7,39 +10,33 @@ Vue.createApp({
 
       selectedIndex: null,
       favoriteRecepies: [],
+      shoppingList: [],
       removeClass: true,
       showFavorites: false,
       showUserShoppingList: false,
-      shoppingList: [],
       changeColor: false,
+      showRecepies: false,
+      input: '',
 
-      filteredShoppingDictionary: {
+      // showDiagram: false,
 
-        value2: '',
-        Value1: '',
-        key: ''
-      },
+      filteredShoppingDictionary: {},
 
+      
 
       contentVisability: {
-
         'showContent': false,
         'hideContent': true,
-
       },
 
       selectedClasses: {
-
         'recepie-container': true,
         'selected-recepie': false,
       },
 
-      showlistClass:{
-
+      showlistClass: {
         'showList': false,
         'hideList': true
-
-
       },
 
       result: [
@@ -51,22 +48,33 @@ Vue.createApp({
           img: '',
           ingredients: [],
           ingredientLines: [],
-
+          protein: '',
+          carbs: '',
+          fat: '',
+          totalWeight: '',
         }
-      ]
-
-      
+      ],
     }
-    
+  },
+
+  created() {
+
+    let savedData = localStorage.getItem('favoriteRecepies')
+    if (savedData) {
+      this.favoriteRecepies = JSON.parse(savedData)
+    }
   },
 
   methods: {
 
-    async usersubmit() {
-
+    usersubmit() {
 
       let input = document.querySelector('input').value;
-      let recepieDiv = document.querySelector('.main-content');
+      this.getRecepies(input)
+      this.input = input;
+    },
+
+    async getRecepies(input) {
 
       let response = await fetch('https://api.edamam.com/api/recipes/v2?type=public&q=' + input + '&app_id=b7754906&app_key=c702a1785ba3ec1968284b35d271f31c')
 
@@ -79,47 +87,43 @@ Vue.createApp({
         img: hit.recipe.images.REGULAR.url,
         ingredients: hit.recipe.ingredients,
         ingredientLines: hit.recipe.ingredientLines,
+        protein: Math.round(hit.recipe.totalNutrients.PROCNT.quantity),
+        carbs: Math.round(hit.recipe.totalNutrients.CHOCDF.quantity),
+        fat: Math.round(hit.recipe.totalNutrients.FAT.quantity),
+        totalWeight: Math.round(hit.recipe.totalWeight)
 
       }));
 
       this.contentVisability['showContent'] = true;
       this.contentVisability['hideContent'] = false;
+      this.selectedClasses['selected-recepie'] = false;
+      this.showlistClass['showList'] = false
 
-
-      // console.log(data.hits);
-
+      this.showUserShoppingList = false;
+      this.showRecepies = true;
+      console.log(data.hits);
     },
-
-
 
     saveRecepie(recepie) {
 
       this.selectedIndex = this.result.indexOf(recepie)
-      this.favoriteRecepies.push(recepie)
 
-     storeData();
+      if (this.favoriteRecepies.includes(recepie)) {
 
-    },
+        return;
+      }
+      else {
 
-    storeData(){
-    
-      let SaveFavoritesRecepies = JSON.stringify(this.favoriteRecepies);
-      let filename = 'favoriteRecepies.json';
-    
-
-      console.log()
+        this.favoriteRecepies.push(recepie)
+        localStorage.setItem('favoriteRecepies', JSON.stringify(this.favoriteRecepies))
+        console.log(this.result)
+      }
     },
 
     removeRecepie(index) {
 
       this.result.splice(index, 1)
-
     },
-
-    // showShoppingList() {
-
-    //   this.result = [];
-    // },
 
     showFavories() {
 
@@ -127,29 +131,21 @@ Vue.createApp({
       this.showFavorites = true;
       this.selectedClasses['recepie-container'] = true;
       // this.recepieClasses['hideContent'] = false;
-
-
     },
 
     removeFavorite(index) {
 
       this.favoriteRecepies.splice(index, 1)
-
-      // console.log(this.favoriteRecepies)
-
+      let favoritesInStorage = JSON.parse(localStorage.getItem('favoriteRecepies'));
+      favoritesInStorage.splice(index, 1);
+      localStorage.setItem('favoriteRecepies', JSON.stringify(favoritesInStorage));
     },
-
-
 
     AddtoShoppingList(recepie) {
 
       console.log(recepie)
-
       let ingredietsArray = recepie.ingredients;
-
       // console.log(ingredietsArray);
-
-
 
       for (let i = 0; i < ingredietsArray.length; i++) {
 
@@ -160,98 +156,118 @@ Vue.createApp({
           measure = null;
         }
 
-
-
         let ingredientsInfo = {
 
           name: ingredietsArray[i].food.toLowerCase(),
           measure: measure,
-          quantity: Math.round(ingredietsArray[i].quantity,1)
+          quantity: Math.round(ingredietsArray[i].quantity, 1)
 
         }
+
         this.shoppingList.push(ingredientsInfo)
         console.log(ingredientsInfo)
       }
 
-
-
       this.changeColor = true;
       this.filterShoppinglist(this.shoppingList);
-
     },
-
-
 
     filterShoppinglist(shoppinglist) {
 
       this.filteredShoppingDictionary = shoppinglist.reduce((filteredShoppingDictionary, ingredient) => {
-  
+
         if (filteredShoppingDictionary.hasOwnProperty(ingredient.name)) {
-  
-            if(ingredient.quantity === 0 || ingredient.quantity === '0'){
 
-              return;
-            }
-            else{
+          if (ingredient.quantity === 0 || ingredient.quantity === '0') {
 
-              filteredShoppingDictionary[ingredient.name].quantity += ingredient.quantity;
-            }
+            return;
+          }
+          else {
 
-         
-          
+            filteredShoppingDictionary[ingredient.name].quantity += ingredient.quantity;
+          }
         }
         else {
 
-          if (ingredient.quantity === 0 || ingredient.quantity === '0'){
+          if (ingredient.quantity === 0 || ingredient.quantity === '0') {
 
-            
-            filteredShoppingDictionary[ingredient.name] = {quantity: '', measure: ingredient.measure, name: ingredient.name};
+            filteredShoppingDictionary[ingredient.name] = {
 
+              quantity: '',
+              measure: ingredient.measure,
+              name: ingredient.name
+            };
           }
-          else{
+          else {
 
-            filteredShoppingDictionary[ingredient.name] = {quantity: ingredient.quantity, measure: ingredient.measure, name: ingredient.name};
+            filteredShoppingDictionary[ingredient.name] = {
 
+              quantity: ingredient.quantity,
+              measure: ingredient.measure,
+              name: ingredient.name
+            };
           }
-  
-          
-          
-  
-  
         }
-  
         return filteredShoppingDictionary;
       }, {})
-
-    
-  
-      console.log(this.filteredShoppingDictionary)
-  
-  
-  
     },
 
-    showShoppingList(){
+    drawDiagram(favorit) {
+
+      if(this.showDiagram === false){
+
+        this.showDiagram = true;
+      }
+      else{
+
+        this.showDiagram = false.
+        return;
+      }
+
+      let protein = favorit.protein
+      let carbs = favorit.carbs
+      let fat = favorit.fat
+      let totalWeight = favorit.totalWeight
+
+      let proteinPercent = Math.round(protein / totalWeight * 100)
+      let carbsPercent = Math.round(carbs / totalWeight * 100)
+      let fatPercent = Math.round(fat / totalWeight * 100)
+
+      const canvas = document.getElementById('newCanvas');
+      const c = canvas.getContext('2d');
+      const w = canvas.width
+      const h = canvas.height
+
+      const proteinHeight = h * (proteinPercent / 100);
+      const carbsHeight = h * (carbsPercent / 100);
+      const fatHeight = h * (fatPercent / 100);
+
+      c.fillStyle = 'lightpink';
+
+      c.font = '12px Arial';
+      c.textAlign = 'center';
+      c.fillText('Protein', w / 6, h - proteinHeight - 5);
+      c.fillRect(35, h - proteinHeight, 70, proteinHeight);
+
+      c.fillStyle = 'lightcoral';
+      c.fillText('Carbs', w / 2, h - carbsHeight - 5);
+      c.fillRect(140, h - carbsHeight, 70, carbsHeight);
+
+      c.fillStyle = 'palevioletred';
+      c.fillText('Fat', 5 * w / 6, h - fatHeight - 5);
+      c.fillRect( 245, h - fatHeight, 70, fatHeight);
+    },
+
+    showShoppingList() {
 
       this.showUserShoppingList = true;
-
-      // Döljer receptDiv och FavoritDiv
       this.selectedClasses['selected-recepie'] = true;
-      // 
-      // this.selectedClasses['recepie-container'] = false;
       this.showlistClass['showList'] = true
       this.showlistClass['hideList'] = false
-      this.contentVisability[ 'showContent'] = false
-      this.contentVisability[ 'hideContent'] = true
+      this.contentVisability['showContent'] = false
+      this.contentVisability['hideContent'] = true
     }
-
-    
-
-
   },
-
-
-
 }).mount('#app');
 
 
