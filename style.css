@@ -9,25 +9,45 @@
 
 body {
 
-    /* background: linear-gradient(to bottom, rgba(248, 246, 245, 0.63), rgb(250, 225, 221)); */
     background-image: url('img.jpg');
     background-repeat: repeat;
     background-size: contain;
     min-height: 100vh;
 }
 
-canvas {
+.diagram-ListItem {
+    border: none;
+    color: rgba(138, 129, 124, 0.87);
+}
 
-    border: 1px solid rgba(0, 0, 0, 0.507);
+.diagram-ListItem:before {
+
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+    content: '';
+}
+
+.diagram-ListItem.protein:before {
+    background-color: #c54c83;
+}
+
+.diagram-ListItem.carbs:before {
+    background-color: #ec729d;
+}
+
+.diagram-ListItem.fat:before {
+    background-color: #f4aeba;
 }
 
 #content-container {
 
-
     max-width: 100%;
     height: 100%;
     display: grid;
-
+    color: ho;
     grid-template:
 
         "a a a "
@@ -37,7 +57,6 @@ canvas {
 
     align-content: center;
     justify-content: center;
-
 }
 
 img {
@@ -45,18 +64,13 @@ img {
     height: auto;
     width: auto;
     padding: 30px;
-
-
-
 }
 
 #header-div {
 
-    /* border: 10px double rgba(138, 129, 124, 0.452) ; */
     padding: 30px;
     max-width: 890px;
     background-color: #fff;
-    /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); */
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
@@ -102,7 +116,6 @@ header {
     color: rgba(138, 129, 124, 0.719);
 }
 
-
 #main-content {
 
     grid-area: c;
@@ -125,7 +138,6 @@ header {
 
     #nav-container {
         grid-template-columns: 1fr;
-
     }
 }
 
@@ -142,7 +154,6 @@ header {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     max-width: 430px;
     max-height: 500px;
-
 }
 
 #ingredient-title {
@@ -233,7 +244,6 @@ header {
 
 .buttonIsActive {
 
-
     background-color: rgba(240, 128, 128, 0.247);
 }
 
@@ -245,7 +255,6 @@ header {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     max-width: 430px;
     min-height: 530px;
-    /* height: auto; */
 }
 
 .showList {
@@ -257,6 +266,29 @@ header {
     width: 400px;
 }
 
+.ingredient-listItem {
+
+    border: none;
+}
+
+#diagram-container {
+
+    display: grid;
+    padding: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 10px;
+}
+
+#diagram-list-container {
+
+    display: grid;
+}
+
+#diagram-div {
+
+    display: grid;
+}
+
 .selected-recepie {
 
     display: none;
@@ -265,8 +297,6 @@ header {
 #nav-container {
 
     grid-area: b;
-    /* align-content: center;
-    justify-content: center; */
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
@@ -294,5 +324,4 @@ footer {
 
     grid-area: d;
     height: 100px;
-    /* background: linear-gradient(to bottom, rgb(250, 248, 248), rgba(252, 213, 206, 0.568)); */
 }

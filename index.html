@@ -18,7 +18,7 @@
         <div id="content-container">
             <header>
                 <div id="header-div" @click="getRecepies(this.input)">
-                    <h1>Dinner planing</h1>
+                    <h1>Dinner planning</h1>
 
                 </div>
             </header>
@@ -29,16 +29,13 @@
 
                     <input type="text" class="inputBox" placeholder="Search recepie or ingredient">
                     <button type="submit" id="submit-button">Search</button>
-
                 </form>
 
                 <div>
                     <button class="buttons" type="button" @click="showFavories()">Show favorites
                         {{favoriteRecepies.length}}</button>
                     <button class="buttons" type="button" @click="showShoppingList()">Shopping list</button>
-
                 </div>
-
             </nav>
 
             <main id="main-content">
@@ -58,7 +55,6 @@
                             <button class="buttons" type="button" @click="removeRecepie(index)">Remove</button>
                         </div>
                     </div>
-
                 </div>
 
                 <div v-if="showFavorites" :class="contentVisability" v-for="(favorite, index) in favoriteRecepies"
@@ -74,32 +70,30 @@
                             @click="favorite.showIngredients = !favorite.showIngredients">Ingredients</button>
 
                         <button class="buttons" type="button" @click="removeFavorite(index)">Delete</button>
-                        
-                       
 
                         <button class="buttons" type="button" @click="AddtoShoppingList(favorite)">Add to
                             shoppinglist</button>
-                            <div>
 
-                                <div>
-                                    <ul>
-                                        <li>dslfmsfd</li>
-                                        <li>ggg</li>
-                                        <li>sgg</li>
-                                    </ul>
-                                </div>
+                        <div id="diagram-container">{{drawDiagram(favorite,index)}}
 
-                                <div id="diagram-div">
-                                    <canvas :id="['canvas-' + index]" width="250" height="250"></canvas>
-                                </div>
-
+                            <div id="diagram-list-container">
+                                <ul>
+                                    <li class="diagram-ListItem protein">{{favorite.protein}} g Protein</li>
+                                    <li class="diagram-ListItem carbs">{{favorite.carbs}} g Carbs</li>
+                                    <li class="diagram-ListItem fat">{{favorite.fat}} g Fat</li>
+                                </ul>
                             </div>
-                            
-                            
+
+                            <div id="diagram-div">
+                                <canvas :id="['canvas-' + index]" width="160" height="160"></canvas>
+                            </div>
+
+                        </div>
 
                         <ul v-if="favorite.showIngredients">
                             <h3 id="ingredient-title">Ingredients</h3>
-                            <li v-for="(ingredient, index) in favorite.ingredients" :key="index">{{ingredient.text}}
+                            <li class="ingredient-listItem" v-for="(ingredient, index) in favorite.ingredients"
+                                :key="index">{{ingredient.text}}
                             </li>
                         </ul>
 

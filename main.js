@@ -1,9 +1,7 @@
 
 Vue.createApp({
 
-
   data() {
-
     return {
 
       selectedIndex: null,
@@ -15,31 +13,7 @@ Vue.createApp({
       changeColor: false,
       showRecepies: false,
       input: '',
-      options: {
-        animationEnabled: true,
-        title:{
-          text: "Vue.js Basic Column Chart"
-        },
-
-        data: [{
-          type: "column",
-          dataPoints: [
-            { label: "apple",  y: 10 },
-            { label: "orange", y: 15 },
-            { label: "banana", y: 25 },
-            { label: "mango",  y: 30 },
-            { label: "grape",  y: 28 }
-          ]
-        }]
-      },
-
-
-
-      // showDiagram: false,
-
       filteredShoppingDictionary: {},
-
-      
 
       contentVisability: {
         'showContent': false,
@@ -82,14 +56,13 @@ Vue.createApp({
     }
   },
 
-  mounted(){
-
-    this.favoriteRecepies.forEach((r,index)=> this.drawDiagram(r,index) );
+  mounted() {
+    this.favoriteRecepies.forEach((favorit, index) => {
+      this.drawDiagram(favorit, index);
+    });
   },
 
   methods: {
-
-   
 
     usersubmit() {
 
@@ -125,7 +98,7 @@ Vue.createApp({
 
       this.showUserShoppingList = false;
       this.showRecepies = true;
-      console.log(data.hits);
+    
     },
 
     saveRecepie(recepie) {
@@ -140,7 +113,7 @@ Vue.createApp({
 
         this.favoriteRecepies.push(recepie)
         localStorage.setItem('favoriteRecepies', JSON.stringify(this.favoriteRecepies))
-        console.log(this.result)
+      
       }
     },
 
@@ -154,7 +127,9 @@ Vue.createApp({
       this.result = [];
       this.showFavorites = true;
       this.selectedClasses['recepie-container'] = true;
-      // this.recepieClasses['hideContent'] = false;
+      this.contentVisability['showContent'] = true
+      this.contentVisability['hideContent'] = false
+
     },
 
     removeFavorite(index) {
@@ -169,7 +144,6 @@ Vue.createApp({
 
       console.log(recepie)
       let ingredietsArray = recepie.ingredients;
-      // console.log(ingredietsArray);
 
       for (let i = 0; i < ingredietsArray.length; i++) {
 
@@ -187,9 +161,7 @@ Vue.createApp({
           quantity: Math.round(ingredietsArray[i].quantity, 1)
 
         }
-
         this.shoppingList.push(ingredientsInfo)
-        console.log(ingredientsInfo)
       }
 
       this.changeColor = true;
@@ -238,75 +210,40 @@ Vue.createApp({
 
     drawDiagram(favorit, index) {
 
-      if(this.showDiagram === false){
+      const canvas = document.getElementById('canvas-' + index);
 
-        this.showDiagram = true;
-      }
-      else{
-
-        this.showDiagram = false.
+      if (!canvas) {
+        setTimeout(() => this.drawDiagram(favorit, index), 10);
         return;
       }
-   
 
       let protein = favorit.protein
       let carbs = favorit.carbs
       let fat = favorit.fat
-      let totalWeight = favorit.totalWeight
-
-      let proteinPercent = Math.round(protein / totalWeight * 100)
-      let carbsPercent = Math.round(carbs / totalWeight * 100)
-      let fatPercent = Math.round(fat / totalWeight * 100)
-
-      const canvas = document.getElementById('canvas-' + index);
-      const c = canvas.getContext('2d');
-
+      let c = canvas.getContext('2d');
       let data = [protein, carbs, fat];
       let total = protein + carbs + fat;
-      let colors = ['#000', 'green', 'blue'];
+      let colors = ['#c54c83af', '#ec729da1', '#f4aeba9c'];
       let lastEnd = 0;
 
-      data.forEach((d, index)=> {
+      data.forEach((d, index) => {
 
         c.fillStyle = colors[index];
         c.beginPath();
-        c.moveTo(canvas.width / 2 , canvas.height / 2);
-        c.arc( 
-          canvas.width/ 2,
+        c.moveTo(canvas.width / 2, canvas.height / 2);
+        c.arc(
+          canvas.width / 2,
           canvas.height / 2,
           canvas.height / 2,
           lastEnd,
-          lastEnd + Math.PI * 2 * (d/total),
+          lastEnd + Math.PI * 2 * (d / total),
           false
         )
 
-        c.lineTo(canvas.width / 2 , canvas.height / 2);
+        c.lineTo(canvas.width / 2, canvas.height / 2);
         c.fill();
-        lastEnd += Math.PI * 2 * (d/total);
+        lastEnd += Math.PI * 2 * (d / total);
       })
-
-
-      // const w = canvas.width
-      // const h = canvas.height
-
-      // const proteinHeight = h * (proteinPercent / 100);
-      // const carbsHeight = h * (carbsPercent / 100);
-      // const fatHeight = h * (fatPercent / 100);
-
-      // c.fillStyle = 'lightpink';
-
-      // c.font = '12px Arial';
-      // c.textAlign = 'center';
-      // c.fillText('Protein', w / 6, h - proteinHeight - 5);
-      // c.fillRect(35, h - proteinHeight, 70, proteinHeight);
-
-      // c.fillStyle = 'lightcoral';
-      // c.fillText('Carbs', w / 2, h - carbsHeight - 5);
-      // c.fillRect(140, h - carbsHeight, 70, carbsHeight);
-
-      // c.fillStyle = 'palevioletred';
-      // c.fillText('Fat', 5 * w / 6, h - fatHeight - 5);
-      // c.fillRect( 245, h - fatHeight, 70, fatHeight);
     },
 
     showShoppingList() {
@@ -319,12 +256,6 @@ Vue.createApp({
       this.contentVisability['hideContent'] = true
     },
 
-    newmethod(){
-
-
-
-
-    }
   },
 }).mount('#app');
 
